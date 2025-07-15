@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Pawn : MonoBehaviour
 {
+    public PawnType pawnType;
     public Room currentRoom;
 
     private bool isDragging = false;
@@ -28,6 +29,7 @@ public class Pawn : MonoBehaviour
 
     void Start()
     {
+        Inventory.Instance.AddPawn(this);
         originalScale = transform.localScale;
         targetScale = originalScale;
         halfHeight = GetHalfHeight();
@@ -132,3 +134,4 @@ public class Pawn : MonoBehaviour
         return transform.position - Vector3.up * halfHeight;
     }
 }
+public enum PawnType {Hostage , Robber }
