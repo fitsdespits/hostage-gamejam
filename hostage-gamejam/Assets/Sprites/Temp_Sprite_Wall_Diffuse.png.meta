@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: b90bd6c94a7fcfa43a79cbfbc527dbb6
+guid: d331f918edd658d47a587fd9cb387917
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 476337630809732554
-    second: Temp_Sprite_Grid_0
+      213: 1643507546597538104
+    second: Temp_Sprite_Wall_Albedo2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -108,7 +108,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -126,12 +126,14 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
-    internalID: 0
+    internalID: 1537655665
     vertices: []
     indices: 
     edges: []
     weights: []
-    secondaryTextures: []
+    secondaryTextures:
+    - texture: {fileID: 2800000, guid: f9e7af8e9a67c1c45b2bf9763214e201, type: 3}
+      name: _NormalMap
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
