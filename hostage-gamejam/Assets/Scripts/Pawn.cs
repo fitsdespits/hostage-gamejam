@@ -11,13 +11,13 @@ public class Pawn : MonoBehaviour
     [SerializeField] private float scaleSpeed = 10f;
 
     [Header("Lag & Tilt")]
-    [SerializeField] private float maxTiltAngle = 15f;
-    [SerializeField] private float springStiffness = 40f;
-    [SerializeField] private float springDamping = 8f;
+    [SerializeField] private float maxTiltAngle = 30f;
+    [SerializeField] private float springStiffness = 100f;
+    [SerializeField] private float springDamping = 10f;
 
     [Header("Lag Limits")]
-    [SerializeField] private float maxLagDistance = 10f;
-    [SerializeField] private float snapDistance = 3f;
+    [SerializeField] private float maxLagDistance = 14f;
+    [SerializeField] private float snapDistance = 1.5f;
 
     private Vector3 desiredTopPosition;      // where the mouse is (top, fixed)
     private Vector3 laggedBottomPosition;    // where the bottom is (lags)
