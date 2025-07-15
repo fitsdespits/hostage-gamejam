@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Pawn : MonoBehaviour
 {
+    public Room currentRoom;
+
     private bool isDragging = false;
     private Vector3 originalScale;
     private Vector3 targetScale;

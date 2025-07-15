@@ -1,16 +1,17 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public abstract class Room : MonoBehaviour
 {
     public string roomName;
-   
+
+    public List<Pawn> pawnsInRoom = new List<Pawn>();
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.TryGetComponent<Pawn>(out var pawn))
         {
-            OnPawnEnter(pawn);
-            
+            PawnEnter(pawn);     
         }
     }
 
@@ -18,21 +19,44 @@ public abstract class Room : MonoBehaviour
     {
         if (other.gameObject.TryGetComponent<Pawn>(out var pawn))
         {
-            OnPawnExit(pawn);
-           
+           PawnExit(pawn);        
         }
     }
-   
-    // Called when a robber enters
+
+    public void PawnEnter(Pawn pawn)
+    {
+        if (!pawnsInRoom.Contains(pawn))
+        {
+            if (pawn.currentRoom != null)
+            {
+                pawn.currentRoom.PawnExit(pawn);
+            }
+            pawn.currentRoom = this;
+            pawnsInRoom.Add(pawn);
+            Debug.Log($"{pawn.name} entered {roomName}");
+            OnPawnEnter(pawn);
+        }
+    }
+    
+    public void PawnExit(Pawn pawn)
+    {
+        if (pawnsInRoom.Contains(pawn))
+        {
+            pawnsInRoom.Remove(pawn);
+            Debug.Log($"{pawn.name} left {roomName}");
+            OnPawnExit(pawn);
+        }
+    }
+    // Called when a pawn enters the room
     public virtual void OnPawnEnter(Pawn pawn)
     {
-        Debug.Log("in");
-    }
-    // Called when a robber leaves
-    public virtual void OnPawnExit(Pawn pawn)
-    {
-        Debug.Log("out");
+
     }
 
+    // Called when a pawn exits the room
+    public virtual void OnPawnExit(Pawn pawn)
+    {
+ 
+    }
 
 }
