@@ -6,20 +6,32 @@ public class Pawn : MonoBehaviour
     private Vector3 originalScale;
     private Vector3 targetScale;
 
+    [Header("Scaling")]
     [SerializeField] private float scaleMultiplier = 1.2f;
     [SerializeField] private float scaleSpeed = 10f;
-    [SerializeField] private float lagSpeed = 5f;
-    [SerializeField] private float maxTiltAngle = 15f;
 
-    private Vector3 desiredTopPosition;    // where the mouse is
-    private Vector3 centerPosition;        // where the center currently is
+    [Header("Lag & Tilt")]
+    [SerializeField] private float maxTiltAngle = 15f;
+    [SerializeField] private float springStiffness = 40f;
+    [SerializeField] private float springDamping = 8f;
+
+    [Header("Lag Limits")]
+    [SerializeField] private float maxLagDistance = 10f;
+    [SerializeField] private float snapDistance = 3f;
+
+    private Vector3 desiredTopPosition;      // where the mouse is (top, fixed)
+    private Vector3 laggedBottomPosition;    // where the bottom is (lags)
+    private Vector3 laggedBottomVelocity;    // velocity of the bottom point
+    private float halfHeight;
 
     void Start()
     {
         originalScale = transform.localScale;
         targetScale = originalScale;
-        centerPosition = transform.position;
+        halfHeight = GetHalfHeight();
+
         desiredTopPosition = GetTopPosition();
+        laggedBottomPosition = GetBottomPosition(); // start at current bottom
     }
 
     void Update()
@@ -29,24 +41,43 @@ public class Pawn : MonoBehaviour
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePos.z = transform.position.z;
 
-            // top of object is fixed to mouse
+            // Top of object is fixed to mouse
             desiredTopPosition = mousePos;
         }
 
-        Vector3 halfHeightOffset = new Vector3(0, GetHalfHeight(), 0);
+        Vector3 desiredBottomPosition = desiredTopPosition - Vector3.up * (halfHeight * 2f);
 
-        // desired center position to keep top fixed
-        Vector3 desiredCenterPosition = desiredTopPosition - halfHeightOffset;
+        // Clamp max lag distance so lagged bottom doesn't fall too far behind
+        Vector3 toTarget = desiredBottomPosition - laggedBottomPosition;
+        if (toTarget.magnitude > maxLagDistance)
+            toTarget = toTarget.normalized * maxLagDistance;
 
-        // smooth lagging of the center *only*
-        centerPosition = Vector3.Lerp(centerPosition, desiredCenterPosition, Time.deltaTime * lagSpeed);
+        // Spring physics for bottom
+        Vector3 acceleration = toTarget * springStiffness - laggedBottomVelocity * springDamping;
+        laggedBottomVelocity += acceleration * Time.deltaTime;
+        laggedBottomPosition += laggedBottomVelocity * Time.deltaTime;
 
-        transform.position = centerPosition;
+        // Hard snap correction if lag is too large
+        if ((laggedBottomPosition - desiredBottomPosition).magnitude > snapDistance)
+        {
+            laggedBottomPosition = Vector3.Lerp(laggedBottomPosition, desiredBottomPosition, 0.5f);
+            laggedBottomVelocity = Vector3.zero;
+        }
 
-        // Optional tilt effect based on lag
-        Vector3 lagDirection = desiredCenterPosition - centerPosition;
-        float angle = Mathf.Clamp(-lagDirection.x * 10f, -maxTiltAngle, maxTiltAngle);
+        // Compute the vector from lagged bottom to fixed top
+        Vector3 upVector = desiredTopPosition - laggedBottomPosition;
+        float angle = Mathf.Atan2(upVector.y, upVector.x) * Mathf.Rad2Deg - 90f;
+
+        // Dynamic max tilt angle reduces tilt if lag is large
+        float dynamicMaxTilt = Mathf.Lerp(maxTiltAngle, 5f, toTarget.magnitude / maxLagDistance);
+        angle = Mathf.Clamp(angle, -dynamicMaxTilt, dynamicMaxTilt);
+
+        // Apply rotation
         transform.rotation = Quaternion.Euler(0, 0, angle);
+
+        // Position the object so its top is at desiredTopPosition
+        Vector3 rotatedOffset = transform.rotation * (Vector3.up * halfHeight);
+        transform.position = desiredTopPosition - rotatedOffset;
 
         // Smooth scale
         transform.localScale = Vector3.Lerp(transform.localScale, targetScale, Time.deltaTime * scaleSpeed);
@@ -60,6 +91,8 @@ public class Pawn : MonoBehaviour
         mousePos.z = transform.position.z;
 
         desiredTopPosition = mousePos;
+        laggedBottomPosition = GetBottomPosition();
+        laggedBottomVelocity = Vector3.zero;
 
         targetScale = originalScale * scaleMultiplier;
     }
@@ -70,7 +103,7 @@ public class Pawn : MonoBehaviour
 
         targetScale = originalScale;
 
-        // reset rotation
+        // Reset rotation
         transform.rotation = Quaternion.identity;
     }
 
@@ -89,6 +122,11 @@ public class Pawn : MonoBehaviour
 
     Vector3 GetTopPosition()
     {
-        return transform.position + new Vector3(0, GetHalfHeight(), 0);
+        return transform.position + Vector3.up * halfHeight;
+    }
+
+    Vector3 GetBottomPosition()
+    {
+        return transform.position - Vector3.up * halfHeight;
     }
 }

@@ -376,6 +376,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scaleMultiplier: 1.2
+  scaleSpeed: 10
+  maxTiltAngle: 25
+  springStiffness: 15
+  springDamping: 3
+  maxLagDistance: 14
+  snapDistance: 1
 --- !u!4 &1569996047
 Transform:
   m_ObjectHideFlags: 0
