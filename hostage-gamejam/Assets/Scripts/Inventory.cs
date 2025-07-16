@@ -13,6 +13,9 @@ public class Inventory : MonoBehaviour
     public int robberCount = 0;
     public int hostageCount = 0;
 
+    public TMPro.TextMeshProUGUI GasText;
+    public int gas = 50;
+
     private void Awake()
     {
         
@@ -24,9 +27,9 @@ public class Inventory : MonoBehaviour
         {
             Destroy(gameObject);  
         }
-        
+        UpdateGasUI();
     }
- 
+  
     private void UpdateUI()
     {
         if (robbersText != null)
@@ -34,6 +37,7 @@ public class Inventory : MonoBehaviour
         if (hostagesText != null)
             hostagesText.text = $"Hostages: {hostageCount}";
     }
+
     public void AddMoney(int amount)
     {
         totalMoney += amount;
@@ -43,6 +47,21 @@ public class Inventory : MonoBehaviour
             moneyText.text = $"${totalMoney}";
         }
     }
+
+    public void SpendGas(int amount)
+    {
+        gas -= amount;
+        if (gas < 0) gas = 0;
+        UpdateGasUI();
+    }
+
+    private void UpdateGasUI()
+    {
+        if (GasText != null)
+            GasText.text = $"Gas: {gas}";
+       
+    }
+
     public void AddPawn(Pawn pawn)
     {
         if (pawn.pawnType == PawnType.Robber)

@@ -5,6 +5,9 @@ public class Pawn : MonoBehaviour
     public PawnType pawnType;
     public Room currentRoom;
 
+    // Only relevant if pawnType == Robber
+    public RobberType robberType = RobberType.DefaultRobber;
+
     private bool isDragging = false;
     private Vector3 originalScale;
     private Vector3 targetScale;
@@ -135,3 +138,4 @@ public class Pawn : MonoBehaviour
     }
 }
 public enum PawnType {Hostage , Robber }
+public enum RobberType {DefaultRobber, GasRobber }
