@@ -33,7 +33,7 @@ public abstract class Room : MonoBehaviour
             }
             pawn.currentRoom = this;
             pawnsInRoom.Add(pawn);
-            Debug.Log($"{pawn.name} entered {roomName}");
+            //Debug.Log($"{pawn.name} entered {roomName}");
             OnPawnEnter(pawn);
         }
     }
@@ -43,7 +43,7 @@ public abstract class Room : MonoBehaviour
         if (pawnsInRoom.Contains(pawn))
         {
             pawnsInRoom.Remove(pawn);
-            Debug.Log($"{pawn.name} left {roomName}");
+          //  Debug.Log($"{pawn.name} left {roomName}");
             OnPawnExit(pawn);
         }
     }
