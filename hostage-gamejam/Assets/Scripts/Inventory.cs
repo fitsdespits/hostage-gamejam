@@ -47,7 +47,11 @@ public class Inventory : MonoBehaviour
             moneyText.text = $"${totalMoney}";
         }
     }
-
+    public void AddGas(int amount)
+    {
+        gas += amount;
+        UpdateGasUI();
+    }
     public void SpendGas(int amount)
     {
         gas -= amount;

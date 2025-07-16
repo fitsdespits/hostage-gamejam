@@ -70,4 +70,27 @@ public class ConferenceRoom : Room
 
         return $"{prefix} {string.Join(", ", items)}";
     }
+    public List<Pawn> GetWants()
+    {
+        var wants = new List<Pawn>();
+        foreach (var pawn in pawnsInRoom)
+        {
+            Vector3 localPos = transform.InverseTransformPoint(pawn.transform.position);
+            if (localPos.x < 0)
+                wants.Add(pawn);
+        }
+        return wants;
+    }
+
+    public List<Pawn> GetGives()
+    {
+        var gives = new List<Pawn>();
+        foreach (var pawn in pawnsInRoom)
+        {
+            Vector3 localPos = transform.InverseTransformPoint(pawn.transform.position);
+            if (localPos.x >= 0)
+                gives.Add(pawn);
+        }
+        return gives;
+    }
 }
