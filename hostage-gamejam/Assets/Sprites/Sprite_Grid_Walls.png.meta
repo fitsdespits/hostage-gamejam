@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: b90bd6c94a7fcfa43a79cbfbc527dbb6
+guid: bf4317e15820e2649b4027db9e1676d1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 476337630809732554
-    second: Temp_Sprite_Grid_0
+      213: -7049322032156293286
+    second: Sprite_Grid_Walls_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
