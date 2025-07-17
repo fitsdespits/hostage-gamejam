@@ -2,10 +2,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class ConferenceRoom : Room
+public class ConverenceRoom : Room
 {
     public TextMeshProUGUI wantText;
     public TextMeshProUGUI giveText;
+
+    public List<Pawn> pawnsOnLeft = new List<Pawn>();
+    public List<Pawn> pawnsOnRight = new List<Pawn>();
 
     private void Update()
     {
@@ -14,15 +17,16 @@ public class ConferenceRoom : Room
 
     private void UpdateSentences()
     {
+        // Clear previous frame’s data
+        pawnsOnLeft.Clear();
+        pawnsOnRight.Clear();
+
         if (pawnsInRoom == null || pawnsInRoom.Count == 0)
         {
             wantText.text = "I want ...";
             giveText.text = "I give ...";
             return;
         }
-
-        List<Pawn> pawnsOnLeft = new List<Pawn>();
-        List<Pawn> pawnsOnRight = new List<Pawn>();
 
         foreach (var pawn in pawnsInRoom)
         {
@@ -36,7 +40,6 @@ public class ConferenceRoom : Room
         wantText.text = GenerateSentencePart(pawnsOnLeft, "I want");
         giveText.text = GenerateSentencePart(pawnsOnRight, "I give");
     }
-
     private string GenerateSentencePart(List<Pawn> pawns, string prefix)
     {
         if (pawns.Count == 0)
@@ -66,6 +69,7 @@ public class ConferenceRoom : Room
             {
                 items.Add("something");
             }
+
         }
 
         return $"{prefix} {string.Join(", ", items)}";
@@ -93,4 +97,5 @@ public class ConferenceRoom : Room
         }
         return gives;
     }
+
 }

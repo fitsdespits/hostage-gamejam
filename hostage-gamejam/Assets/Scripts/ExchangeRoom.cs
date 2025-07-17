@@ -60,11 +60,18 @@ public class ExchangeRoom : Room
         if (hostagesDelivered >= hostagesPromised)
         {
             Debug.Log("Deal honored: you delivered what you promised.");
+            EscalationManager.Instance.DecreaseEscalation(20f);
         }
         else
         {
             Debug.Log($"Deal broken: you only delivered {hostagesDelivered}/{hostagesPromised} hostages.");
-            // escalate later if you want
+            EscalationManager.Instance.IncreaseEscalation(20f);
+        }
+
+        if(hostagesDelivered > hostagesPromised)
+        {
+            Debug.Log("youre too kind!");
+            EscalationManager.Instance.DecreaseEscalation(40f);
         }
 
         // Reset counts

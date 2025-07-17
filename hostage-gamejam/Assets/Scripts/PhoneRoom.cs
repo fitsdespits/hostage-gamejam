@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class PhoneRoom : Room
 {
+
     [Header("References")]
-    public ConferenceRoom conferenceRoom;  // assign in Inspector
+    public ConverenceRoom converenceRoom;  // assign in Inspector
     public ExchangeRoom exchangeRoom;      // assign in Inspector
 
     private bool dealInProgress = false;
@@ -31,7 +32,9 @@ public class PhoneRoom : Room
         Debug.Log("Calling the police...");
         yield return new WaitForSeconds(1f); // 1 second delay for visuals
 
-        if (conferenceRoom == null || exchangeRoom == null)
+        checkDeal();
+
+        if (converenceRoom == null || exchangeRoom == null)
         {
             Debug.LogWarning("ConferenceRoom or ExchangeRoom not assigned.");
             dealInProgress = false;
@@ -39,16 +42,18 @@ public class PhoneRoom : Room
         }
 
         // Get wants and gives from ConferenceRoom
-        List<Pawn> wants = conferenceRoom.GetWants();
-        List<Pawn> gives = conferenceRoom.GetGives();
+        List<Pawn> wants = converenceRoom.GetWants();
+        List<Pawn> gives = converenceRoom.GetGives();
 
         // Grant the rewards (the "wants")
         foreach (var pawn in wants)
         {
             if (pawn.pawnType == PawnType.Robber)
             {
+                
                 switch (pawn.robberType)
                 {
+                   
                     case RobberType.DefaultRobber:
                         Inventory.Instance.AddMoney(2000);
                         Debug.Log("Granted: +2000 money.");
@@ -76,5 +81,21 @@ public class PhoneRoom : Room
         exchangeRoom.StartExchange(promisedHostages);
 
         dealInProgress = false;
+    }
+
+    public void checkDeal()
+    {
+        if (converenceRoom.pawnsOnLeft.Count > converenceRoom.pawnsOnRight.Count)
+        {
+            EscalationManager.Instance.IncreaseEscalation(5f);
+            //unfair deal on amount asked and given
+        }
+        if (converenceRoom.pawnsOnLeft.Count == 0 && converenceRoom.pawnsOnRight.Count <= 1 )
+        {
+            EscalationManager.Instance.DecreaseEscalation(5f);
+            //ask nothing, give something
+        }
+ 
+
     }
 }

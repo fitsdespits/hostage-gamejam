@@ -3,7 +3,7 @@ using UnityEngine;
 public class VaultRoom : Room
 {
     public int MoneyperPawnGain = 100;
-    public float GainInterval = 3f;
+    public float GainInterval = 1f;
     private float timer = 0f;
 
     private void Start()
