@@ -5,6 +5,7 @@ public class Pawn : MonoBehaviour
     public PawnType pawnType;
     public Room currentRoom;
 
+
     // Only relevant if pawnType == Robber
     public RobberType robberType = RobberType.DefaultRobber;
 
@@ -30,6 +31,7 @@ public class Pawn : MonoBehaviour
     private Vector3 laggedBottomVelocity;    // velocity of the bottom point
     private float halfHeight;
 
+    public Animator animator;
     void Start()
     {
         Inventory.Instance.AddPawn(this);
@@ -39,6 +41,7 @@ public class Pawn : MonoBehaviour
 
         desiredTopPosition = GetTopPosition();
         laggedBottomPosition = GetBottomPosition(); // start at current bottom
+
     }
 
     void Update()
@@ -50,6 +53,8 @@ public class Pawn : MonoBehaviour
 
             // Top of object is fixed to mouse
             desiredTopPosition = mousePos;
+            
+
         }
 
         Vector3 desiredBottomPosition = desiredTopPosition - Vector3.up * (halfHeight * 2f);
@@ -102,6 +107,8 @@ public class Pawn : MonoBehaviour
         laggedBottomVelocity = Vector3.zero;
 
         targetScale = originalScale * scaleMultiplier;
+
+        animator.SetTrigger("Drag");
     }
 
     void OnMouseUp()
@@ -112,6 +119,16 @@ public class Pawn : MonoBehaviour
 
         // Reset rotation
         transform.rotation = Quaternion.identity;
+
+        if(currentRoom != null && currentRoom.animationTrigger != string.Empty)
+        {
+            animator.SetTrigger(currentRoom.animationTrigger);
+        }
+        else
+        {
+            animator.SetTrigger("Idle");
+        }
+        
     }
 
     float GetHalfHeight()

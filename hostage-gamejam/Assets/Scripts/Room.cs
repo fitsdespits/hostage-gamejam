@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public abstract class Room : MonoBehaviour
 {
     public string roomName;
-
+    public string animationTrigger;
     public List<Pawn> pawnsInRoom = new List<Pawn>();
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -33,8 +33,10 @@ public abstract class Room : MonoBehaviour
             }
             pawn.currentRoom = this;
             pawnsInRoom.Add(pawn);
-            //Debug.Log($"{pawn.name} entered {roomName}");
+            
             OnPawnEnter(pawn);
+
+            
         }
     }
     
@@ -43,7 +45,6 @@ public abstract class Room : MonoBehaviour
         if (pawnsInRoom.Contains(pawn))
         {
             pawnsInRoom.Remove(pawn);
-          //  Debug.Log($"{pawn.name} left {roomName}");
             OnPawnExit(pawn);
         }
     }

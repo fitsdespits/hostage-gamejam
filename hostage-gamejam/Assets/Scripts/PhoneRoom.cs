@@ -11,10 +11,8 @@ public class PhoneRoom : Room
 
     private bool dealInProgress = false;
 
-    private void OnTriggerEnter2D(Collider2D other)
+    public override void OnPawnEnter(Pawn pawn)
     {
-        if (!other.TryGetComponent<Pawn>(out var pawn))
-            return;
 
         if (dealInProgress)
         {
@@ -24,6 +22,7 @@ public class PhoneRoom : Room
 
         StartCoroutine(HandleDeal());
     }
+
 
     private IEnumerator HandleDeal()
     {

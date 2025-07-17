@@ -28,6 +28,7 @@ public class VaultRoom : Room
             {
                 moneyThisTick += MoneyperPawnGain;
                 Inventory.Instance.AddMoney(MoneyperPawnGain);
+                
             }
          
         }
