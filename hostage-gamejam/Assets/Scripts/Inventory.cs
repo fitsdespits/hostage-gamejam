@@ -33,18 +33,18 @@ public class Inventory : MonoBehaviour
     private void UpdateUI()
     {
         if (robbersText != null)
-            robbersText.text = $"Robbers: {robberCount}";
+            robbersText.text = $"{robberCount}";
         if (hostagesText != null)
-            hostagesText.text = $"Hostages: {hostageCount}";
+            hostagesText.text = $"{hostageCount}";
     }
 
     public void AddMoney(int amount)
     {
         totalMoney += amount;
-        Debug.Log($" Total money: {totalMoney}");
+        Debug.Log($"{totalMoney}");
         if (moneyText != null)
         {
-            moneyText.text = $"${totalMoney}";
+            moneyText.text = $"{totalMoney}";
         }
     }
     public void AddGas(int amount)
@@ -62,7 +62,7 @@ public class Inventory : MonoBehaviour
     private void UpdateGasUI()
     {
         if (GasText != null)
-            GasText.text = $"Gas: {gas}";
+            GasText.text = $"{gas}";
        
     }
 

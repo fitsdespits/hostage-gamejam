@@ -11,7 +11,7 @@ public class EscalationManager : MonoBehaviour
     public float minEscalation = 0f;
 
     [Header("Optional UI")]
-    public Slider escalationSlider;
+    public Image escalationSlider;
 
     private void Awake()
     {
@@ -55,7 +55,7 @@ public class EscalationManager : MonoBehaviour
     {
         if (escalationSlider != null)
         {
-            escalationSlider.value = currentEscalation / maxEscalation;
+            escalationSlider.fillAmount = currentEscalation / maxEscalation;
         }
     }
 }
