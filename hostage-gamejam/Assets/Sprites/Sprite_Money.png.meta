@@ -1,52 +1,10 @@
 fileFormatVersion: 2
-guid: a4baf7117c57e1748a4837015c232a5c
+guid: 12974c58f25d79240b88f27bf38acb77
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4196569215632998216
-    second: Sprite_Grid_UI_0
-  - first:
-      213: -8667128961995041900
-    second: Sprite_Grid_UI_1
-  - first:
-      213: -1659334624037376903
-    second: Sprite_Grid_UI_2
-  - first:
-      213: 7118560969982779442
-    second: Sprite_Grid_UI_3
-  - first:
-      213: -3901941722090075564
-    second: Sprite_Grid_UI_4
-  - first:
-      213: -2910642166028127440
-    second: Sprite_Grid_UI_5
-  - first:
-      213: -8936938603566468718
-    second: Sprite_Grid_UI_6
-  - first:
-      213: 1943492878318200150
-    second: Sprite_Grid_UI_7
-  - first:
-      213: -3676922316402948951
-    second: Sprite_Grid_UI_8
-  - first:
-      213: -7259118988726875877
-    second: Sprite_Grid_UI_9
-  - first:
-      213: -2575476551890035689
-    second: Sprite_Grid_UI_10
-  - first:
-      213: 3632011173368544292
-    second: Sprite_Grid_UI_11
-  - first:
-      213: -4766590656450740468
-    second: Sprite_Grid_UI_12
-  - first:
-      213: 1214575185738094517
-    second: Sprite_Grid_UI_13
-  - first:
-      213: -4257157253284871304
-    second: Sprite_Grid_UI_14
+      213: -5075385862490072223
+    second: Sprite_Money_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -90,9 +48,9 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 1
   spriteExtrude: 1
-  spriteMeshType: 0
-  alignment: 2
-  spritePivot: {x: 0.5, y: 1}
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
@@ -150,7 +108,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -168,7 +126,7 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
-    internalID: 1537655665
+    internalID: 0
     vertices: []
     indices: 
     edges: []
