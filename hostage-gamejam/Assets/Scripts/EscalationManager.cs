@@ -31,7 +31,7 @@ public class EscalationManager : MonoBehaviour
 
         if (delayTimer >= 30f) // every 30 seconds of inactivity
         {
-            EscalationManager.Instance.IncreaseEscalation(1f);
+            EscalationManager.Instance.IncreaseEscalation(3f);
             delayTimer = 0f;
             
         }

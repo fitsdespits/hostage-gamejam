@@ -53,7 +53,7 @@ public class ExchangeRoom : Room
         Debug.Log($"Hostage delivered: {hostagesDelivered}/{hostagesPromised}");
     }
 
-    private void EvaluateExchange()
+    private void EvaluateExchange() //hostage delivery is wonky af > sometimes triggers . fix on called
     {
         exchangeActive = false;
 
@@ -61,6 +61,7 @@ public class ExchangeRoom : Room
         {
             Debug.Log("Deal honored: you delivered what you promised.");
             EscalationManager.Instance.DecreaseEscalation(20f);
+            //Destroy(hostagesDelivered);
         }
         else
         {
@@ -71,7 +72,7 @@ public class ExchangeRoom : Room
         if(hostagesDelivered > hostagesPromised)
         {
             Debug.Log("youre too kind!");
-            EscalationManager.Instance.DecreaseEscalation(40f);
+            EscalationManager.Instance.DecreaseEscalation(30f);
         }
 
         // Reset counts

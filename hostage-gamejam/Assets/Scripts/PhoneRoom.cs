@@ -11,6 +11,8 @@ public class PhoneRoom : Room
 
     private bool dealInProgress = false;
 
+    public bool validDeal;
+
     public override void OnPawnEnter(Pawn pawn)
     {
 
@@ -31,7 +33,7 @@ public class PhoneRoom : Room
         Debug.Log("Calling the police...");
         yield return new WaitForSeconds(1f); // 1 second delay for visuals
 
-        checkDeal();
+      //  checkDeal();
 
         if (converenceRoom == null || exchangeRoom == null)
         {
@@ -55,11 +57,13 @@ public class PhoneRoom : Room
                    
                     case RobberType.DefaultRobber:
                         Inventory.Instance.AddMoney(2000);
+                        EscalationManager.Instance.IncreaseEscalation(10f);
                         Debug.Log("Granted: +2000 money.");
                         break;
 
                     case RobberType.GasRobber:
                         Inventory.Instance.AddGas(20);
+                        EscalationManager.Instance.IncreaseEscalation(10f);
                         Debug.Log("Granted: +20 gas.");
                         break;
                 }
@@ -72,6 +76,18 @@ public class PhoneRoom : Room
         {
             if (pawn.pawnType == PawnType.Hostage)
                 promisedHostages++;
+
+            if (pawn.pawnType == PawnType.Robber && Inventory.Instance.totalMoney >= 2000)
+            {
+                Inventory.Instance.AddMoney(-2000);
+                EscalationManager.Instance.DecreaseEscalation(10f);
+            }
+            if (pawn.pawnType == PawnType.Robber && Inventory.Instance.totalMoney <= 2000)
+            {
+                Inventory.Instance.totalMoney = 0;
+                Debug.Log("you have no money");
+                EscalationManager.Instance.IncreaseEscalation(10f);
+            }
         }
 
         Debug.Log($"Police accepted your demands. You promised to give {promisedHostages} hostages.");
@@ -82,19 +98,23 @@ public class PhoneRoom : Room
         dealInProgress = false;
     }
 
-    public void checkDeal()
-    {
-        if (converenceRoom.pawnsOnLeft.Count > converenceRoom.pawnsOnRight.Count)
-        {
-            EscalationManager.Instance.IncreaseEscalation(5f);
+    //public void checkDeal()
+   // {
+     //   if (converenceRoom.pawnsOnLeft.Count > converenceRoom.pawnsOnRight.Count)
+     //   {
+    //        EscalationManager.Instance.IncreaseEscalation(5f);
             //unfair deal on amount asked and given
-        }
-        if (converenceRoom.pawnsOnLeft.Count == 0 && converenceRoom.pawnsOnRight.Count <= 1 )
-        {
-            EscalationManager.Instance.DecreaseEscalation(5f);
+     //   }
+    //    if (converenceRoom.pawnsOnLeft.Count == 0 && converenceRoom.pawnsOnRight.Count <= 1 )
+    //    {
+     //       EscalationManager.Instance.DecreaseEscalation(5f);
             //ask nothing, give something
-        }
- 
+     //   }
+        
+       // if(converenceRoom.pawnsOnLeft == PawnType.Hostage) // als pawntype links hostage is
+       // {
+      //      validDeal = false;
+      //  }
+
 
     }
-}

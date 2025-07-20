@@ -41,7 +41,7 @@ public class Inventory : MonoBehaviour
     public void AddMoney(int amount)
     {
         totalMoney += amount;
-        Debug.Log($"{totalMoney}");
+       
         if (moneyText != null)
         {
             moneyText.text = $"{totalMoney}";
